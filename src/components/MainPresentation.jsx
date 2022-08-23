@@ -1,11 +1,15 @@
 export default function MainPresentation({ handleClick }) {
   return (
-    <div>
-      <p> A memory game of animals</p>
-      <button type="button" onClick={handleClick}>
-        {' '}
-        Play the game{' '}
-      </button>
+    <div className="presentation">
+      <div className="presentation-emojis">🙈🙉🐶🐱🐼🐨🐰🐹🦊</div>
+      <div className="presentation-content">
+        <h1> Animal Memory Game</h1>
+        <button type="button" onClick={handleClick}>
+          {' '}
+          Play Game{' '}
+        </button>
+      </div>
+      <div className="presentation-emojis">🙈🙉🐶🐱🐼🐨🐰🐹🦊</div>
     </div>
   );
 }

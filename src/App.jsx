@@ -13,6 +13,7 @@ function App() {
   const [currentScore, setCurrentScore] = useState(0);
   const [showPresentation, setShowPresentation] = useState(true);
   const [fetchingFailed, setFetchingFailed] = useState(false);
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -41,6 +42,7 @@ function App() {
   function handlePresentationChange() {
     setShowPresentation(false);
   }
+
   function incrementScore() {
     setCurrentScore((prevScore) => prevScore + 1);
   }
@@ -67,11 +69,13 @@ function App() {
       ) : (
         <>
           <Header bestScore={bestScore} currentScore={currentScore} />
-          <AnimalCards
-            animals={animals}
-            incrementScore={() => incrementScore()}
-            handleClick={() => handleClick()}
-          />
+          {!fetchingFailed && (
+            <AnimalCards
+              animals={animals}
+              incrementScore={() => incrementScore()}
+              handleClick={() => handleClick()}
+            />
+          )}
           {bestScore === 10 && (
             <WinningModal
               score={bestScore}
