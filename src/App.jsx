@@ -3,6 +3,7 @@ import AnimalCards from './components/AnimalCards';
 import MainPresentation from './components/MainPresentation';
 import Header from './components/Header';
 import WinningModal from './components/WinningModal';
+import FailedFetching from './components/FailedFetching';
 import './App.css';
 
 function App() {
@@ -11,7 +12,7 @@ function App() {
   const [bestScore, setBestScore] = useState(0);
   const [currentScore, setCurrentScore] = useState(0);
   const [showPresentation, setShowPresentation] = useState(true);
-
+  const [fetchingFailed, setFetchingFailed] = useState(false);
   useEffect(() => {
     async function fetchData() {
       try {
@@ -22,10 +23,11 @@ function App() {
         setAnimals(response);
       } catch (error) {
         console.log(error);
+        setFetchingFailed(true);
       }
     }
     fetchData();
-  }, [isPlaying]);
+  }, [isPlaying, fetchingFailed]);
 
   useEffect(() => {
     if (currentScore >= bestScore) {
@@ -54,6 +56,10 @@ function App() {
     return setIsPlaying((prevState) => !prevState);
   }
 
+  function handleFetchingError() {
+    setFetchingFailed(false);
+  }
+
   return (
     <div className="App">
       {showPresentation ? (
@@ -66,13 +72,16 @@ function App() {
             incrementScore={() => incrementScore()}
             handleClick={() => handleClick()}
           />
+          {bestScore === 10 && (
+            <WinningModal
+              score={bestScore}
+              handleClick={() => handleWinningCase()}
+            />
+          )}
+          {fetchingFailed && (
+            <FailedFetching handleClick={() => handleFetchingError()} />
+          )}
         </>
-      )}
-      {bestScore === 10 && (
-        <WinningModal
-          score={bestScore}
-          handleClick={() => handleWinningCase()}
-        />
       )}
     </div>
   );
