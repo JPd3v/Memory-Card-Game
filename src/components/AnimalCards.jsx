@@ -1,6 +1,10 @@
 import Card from './Card';
 
 export default function AnimalCards({ animals, handleClick, incrementScore }) {
+  function shuffleArray(array) {
+    return array.sort(() => (Math.random() > 0.5 ? 1 : -1));
+  }
+  const AnimalsShuffled = shuffleArray(animals);
   function mapAnimals(array) {
     return array.map((animal) => (
       <div className="animal-card" key={animal.id}>
@@ -14,7 +18,7 @@ export default function AnimalCards({ animals, handleClick, incrementScore }) {
     ));
   }
 
-  const animalsElements = mapAnimals(animals);
+  const animalsElements = mapAnimals(AnimalsShuffled);
 
   return <div>{animalsElements}</div>;
 }
