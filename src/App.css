@@ -1,0 +1,14 @@
+.animal-card {
+  width: fit-content;
+  background: none;
+}
+.animal-card > button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.card-animal-image {
+  width: 100px;
+  height: 100px;
+}
