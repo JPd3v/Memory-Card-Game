@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import AnimalCards from './components/AnimalCards';
-
 import MainPresentation from './components/MainPresentation';
 import Header from './components/Header';
+import WinningModal from './components/WinningModal';
 import './App.css';
 
 function App() {
@@ -11,6 +11,7 @@ function App() {
   const [bestScore, setBestScore] = useState(0);
   const [currentScore, setCurrentScore] = useState(0);
   const [showPresentation, setShowPresentation] = useState(true);
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -31,7 +32,7 @@ function App() {
       setBestScore(currentScore);
     }
     if (currentScore === 10) {
-      console.log(12321);
+      setIsPlaying(false);
     }
   }, [bestScore, currentScore]);
 
@@ -43,6 +44,12 @@ function App() {
   }
 
   function handleClick() {
+    setCurrentScore(0);
+    return setIsPlaying((prevState) => !prevState);
+  }
+
+  function handleWinningCase() {
+    setBestScore(0);
     setCurrentScore(0);
     return setIsPlaying((prevState) => !prevState);
   }
@@ -60,6 +67,12 @@ function App() {
             handleClick={() => handleClick()}
           />
         </>
+      )}
+      {bestScore === 10 && (
+        <WinningModal
+          score={bestScore}
+          handleClick={() => handleWinningCase()}
+        />
       )}
     </div>
   );
